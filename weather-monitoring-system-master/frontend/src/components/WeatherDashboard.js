@@ -1,4 +1,3 @@
-
 import React, { useEffect, useState } from 'react';
 import { fetchWeatherSummary } from '../services/weatherService';
 import WeatherCard from './WeatherCard';
@@ -12,8 +11,8 @@ const WeatherDashboard = () => {
   const [alertMessage, setAlertMessage] = useState('');
   const [loading, setLoading] = useState(true);
   const [searchTerm, setSearchTerm] = useState('');
-  const [alertDismissed, setAlertDismissed] = useState(false); // Track alert dismissal
-  const [alertCities, setAlertCities] = useState([]); // Track cities with alerts
+  const [alertDismissed, setAlertDismissed] = useState(false);
+  const [alertCities, setAlertCities] = useState([]);
 
   useEffect(() => {
     const getWeather = async () => {
@@ -22,11 +21,9 @@ const WeatherDashboard = () => {
       setFilteredData(data);
       setLoading(false);
 
-      // Identify cities with high temperatures
       const highTempCities = data.filter((weather) => weather.temperature > 35);
-      setAlertCities(highTempCities.map(city => city.city)); // Set alert cities
+      setAlertCities(highTempCities.map(city => city.city));
 
-      // Default alert message
       if (highTempCities.length === 0) {
         setAlertMessage(`No High temperature alerts`);
       }
@@ -45,31 +42,29 @@ const WeatherDashboard = () => {
     setFilteredData(filtered);
   };
 
-  // Function to show alert messages for all cities
   const showAlertAgain = () => {
     const highTempCities = weatherData.filter((weather) => weather.temperature > 35);
     
     if (highTempCities.length > 0) {
       const alertMessages = highTempCities.map(city => `${city.city} is ${city.temperature}°C`).join(', ');
       setAlertMessage(`High temperature alert: ${alertMessages}`);
-      setAlertDismissed(false); // Reset alert dismissed state
-      setAlertCities(highTempCities.map(city => city.city)); // Reset alert cities
-    }
-    else{
+      setAlertDismissed(false);
+      setAlertCities(highTempCities.map(city => city.city));
+    } else {
       setAlertMessage(`No High temperature alerts`);
     }
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-gray-800 via-gray-900 to-black text-white p-6">
-      <header className="text-center mb-8">
-        <h1 className="text-5xl font-extrabold text-teal-400">Today's Weather</h1>
+    <div className="min-h-screen bg-gray-100 text-gray-800 p-6">
+      <header className="text-center mb-10">
+        <h1 className="text-4xl font-bold text-blue-600">Weather Dashboard</h1>
         <input
           type="text"
           placeholder="Search by city..."
           value={searchTerm}
           onChange={handleSearchChange}
-          className="mt-6 p-3 bg-gray-700 text-white border border-gray-500 rounded-lg w-full sm:w-2/3 md:w-1/2 lg:w-1/3 mx-auto focus:outline-none focus:ring-2 focus:ring-teal-400"
+          className="mt-4 p-3 bg-white text-gray-800 border border-gray-300 rounded-lg shadow focus:outline-none focus:ring-2 focus:ring-blue-400 transition duration-200 w-full max-w-md mx-auto"
         />
       </header>
 
@@ -78,18 +73,17 @@ const WeatherDashboard = () => {
           alertMessage={alertMessage}
           onDismiss={() => {
             setAlertMessage('');
-            setAlertDismissed(true); // Set alert as dismissed
-            setAlertCities([]); // Clear alert cities when dismissed
+            setAlertDismissed(true);
+            setAlertCities([]);
           }}
         />
       </div>
 
-      {/* Show the button outside the card grid */}
       {alertDismissed && (
         <div className="text-center mb-4">
           <button
             onClick={showAlertAgain}
-            className="px-6 py-2 bg-teal-600 text-white rounded-lg hover:bg-teal-700 transition-colors transform hover:scale-105 focus:outline-none"
+            className="px-6 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition duration-200 transform hover:scale-105 focus:outline-none"
           >
             Show Alerts Again
           </button>
@@ -101,25 +95,27 @@ const WeatherDashboard = () => {
           <Spinner />
         </div>
       ) : (
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 mt-8">
-          {filteredData.map((weather, index) => (
-            <div key={index} className="transition-transform transform hover:scale-105">
-              <WeatherCard
-                weather={weather}
-                isAlertActive={alertCities.includes(weather.city)} // Check if the city is in alertCities
-              />
-            </div>
-          ))}
+        <div className="flex flex-col lg:flex-row gap-6 mt-8">
+          <div className="flex-1 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+            {filteredData.map((weather, index) => (
+              <div key={index} className="transition-transform transform hover:scale-105">
+                <WeatherCard
+                  weather={weather}
+                  isAlertActive={alertCities.includes(weather.city)}
+                />
+              </div>
+            ))}
+          </div>
+
+          <div className="flex-1 bg-white rounded-lg shadow-lg p-6">
+            <h2 className="text-2xl font-semibold mb-4 text-blue-600">Temperature Trends</h2>
+            <Charts data={{
+              labels: weatherData.map(weather => weather.city),
+              values: weatherData.map(weather => weather.temperature),
+            }} />
+          </div>
         </div>
       )}
-
-      <div className="mt-12 bg-gray-800 rounded-lg shadow-lg p-6">
-        <h2 className="text-2xl font-semibold mb-4 text-teal-400">Temperature Trends</h2>
-        <Charts data={{
-          labels: weatherData.map(weather => weather.city),
-          values: weatherData.map(weather => weather.temperature),
-        }} />
-      </div>
     </div>
   );
 };
