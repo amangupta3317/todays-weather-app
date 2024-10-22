@@ -1,6 +1,5 @@
 {
   "version": 2,
-<<<<<<< HEAD
   "builds": [
     {
       "src": "server.js",
@@ -11,12 +10,6 @@
     {
       "src": "/(.*)",
       "dest": "server.js"
-=======
-  "routes": [
-    {
-      "src": "/(.*)",
-      "dest": "/"
->>>>>>> 26fe1a1d87cfd986c62c1b7efa9aec997e2d8b39
     }
   ]
 }
