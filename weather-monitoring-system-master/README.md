@@ -15,6 +15,9 @@
 ## Introduction
 
 The Weather Monitoring System is a web application that provides real-time weather data for major metros in India, including Delhi, Mumbai, Chennai, Bangalore, Kolkata, and Hyderabad. The application fetches weather data from the OpenWeatherMap API and displays it in an interactive dashboard. Users can also search for specific cities to view their current weather conditions.
+![Screenshot 2024-10-23 234308](https://github.com/user-attachments/assets/8246f244-c70f-4894-ab41-a17cbb3881d3)
+![Screenshot 2024-10-23 234252](https://github.com/user-attachments/assets/3a013dd1-ce74-481f-8803-ca323463b14a)
+![Screenshot 2024-10-23 234235](https://github.com/user-attachments/assets/34eb5bd0-0aa3-403a-aec6-89ae0ac764f9)
 
 ## Features
 
@@ -47,7 +50,9 @@ Make sure you have the following installed on your machine:
 
 ```bash
 git clone https://github.com/amangupta3317/todays-weather-app/edit/master/weather-monitoring-system-master.git
-cd weather-monitoring-system
+cd weather-monitoring-system-master
+
+
 
 ```
 
