@@ -5,6 +5,11 @@ const express = require('express');
 const mongoose = require('mongoose');
 // const dotenv = require('dotenv');
 const cors = require('cors'); // Import the cors package
+const corsConfig= {
+  origin:"*",
+  credential : true,
+  methods:[ "GET","POST", "PUT", "DELETE"],
+};
 const weatherRoutes = require('./src/routes/weatherRoutes');
 const { startWeatherPolling } = require('./src/services/weatherPollingService');
 
@@ -13,7 +18,7 @@ const { startWeatherPolling } = require('./src/services/weatherPollingService');
 const app = express();
 
 // Middleware and routes setup
-app.use(cors()); // Enable CORS for all routes
+app.use(cors(corsConfig)); // Enable CORS for all routes
 app.use(express.json());
 app.use('/api/weather', weatherRoutes);
 // console.log('MongoDB URI:', process.env.MONGODB_URI);
