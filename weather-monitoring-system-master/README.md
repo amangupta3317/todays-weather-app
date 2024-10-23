@@ -46,7 +46,7 @@ Make sure you have the following installed on your machine:
 ### Clone the Repository
 
 ```bash
-git clone https://github.com/sameer0288/weather-monitoring-system.git
+git clone https://github.com/amangupta3317/todays-weather-app/edit/master/weather-monitoring-system-master.git
 cd weather-monitoring-system
 
 ```
